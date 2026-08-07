@@ -205,13 +205,13 @@ button:focus-visible, a:focus-visible { outline: 3px solid rgba(86, 60, 92, .28)
   position: absolute;
   left: 24px;
   top: 24px;
-  width: 31px;
-  height: 31px;
+  width: 29px;
+  height: 29px;
   display: grid;
   place-items: center;
-  border-radius: 10px;
-  background: var(--mineral-tint);
-  color: var(--mineral-deep);
+  border-radius: 9px;
+  background: var(--red);
+  color: #fff;
   font-weight: 800;
 }
 .attention-group-label {
