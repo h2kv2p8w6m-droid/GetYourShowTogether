@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<meta name="theme-color" content="#FAF5EC" />
+<title>Get Your Show Together</title>
+<link rel="manifest" href="manifest.json" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Sofia+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <div id="app">
+
+    <header class="topbar">
+      <div class="wordmark">Get Your Show Together</div>
+      <div class="greeting" id="greeting">Loading your shows&hellip;</div>
+    </header>
+
+    <section class="stats" id="stats" hidden>
+      <div class="stat-chip">
+        <span class="stat-num" id="statUpcoming">0</span>
+        <span class="stat-label">Upcoming</span>
+      </div>
+      <div class="stat-chip stat-chip--ember">
+        <span class="stat-num" id="statDeadlines">0</span>
+        <span class="stat-label">Deadlines&nbsp;soon</span>
+      </div>
+      <div class="stat-chip">
+        <span class="stat-num" id="statUnpaid">0</span>
+        <span class="stat-label">Fees&nbsp;due</span>
+      </div>
+    </section>
+
+    <main id="eventList" class="event-list" aria-live="polite">
+      <!-- event cards injected here -->
+    </main>
+
+    <div id="emptyState" class="empty-state" hidden>
+      <div class="empty-stamp">＋</div>
+      <p>No shows logged yet.<br />Tap the button below to add your first one.</p>
+    </div>
+
+    <div id="errorState" class="empty-state" hidden>
+      <p id="errorMessage">Something went wrong loading your shows.</p>
+    </div>
+
+  </div>
+
+  <button id="addBtn" class="fab" aria-label="Add a new show">+</button>
+
+  <!-- Add Event sheet -->
+  <div id="sheetBackdrop" class="sheet-backdrop" hidden>
+    <div class="sheet" role="dialog" aria-modal="true" aria-labelledby="sheetTitle">
+      <div class="sheet-handle"></div>
+      <h2 id="sheetTitle">Log a new show</h2>
+      <form id="eventForm">
+        <label>
+          Show name
+          <input type="text" name="name" required placeholder="e.g. Autumn Maker's Market" />
+        </label>
+        <div class="row">
+          <label>
+            Start date
+            <input type="date" name="dateStart" />
+          </label>
+          <label>
+            End date
+            <input type="date" name="dateEnd" />
+          </label>
+        </div>
+        <label>
+          Location
+          <input type="text" name="location" placeholder="City, venue" />
+        </label>
+        <div class="row">
+          <label>
+            Application deadline
+            <input type="date" name="applicationDeadline" />
+          </label>
+          <label>
+            Booth fee due
+            <input type="date" name="boothFeeDueDate" />
+          </label>
+        </div>
+        <label>
+          Booth fee ($)
+          <input type="number" name="fee" min="0" step="0.01" inputmode="decimal" />
+        </label>
+        <label>
+          Event website
+          <input type="url" name="eventUrl" placeholder="https://" />
+        </label>
+        <label>
+          Notes
+          <textarea name="notes" rows="2" placeholder="Anything worth remembering"></textarea>
+        </label>
+
+        <div class="sheet-actions">
+          <button type="button" id="cancelBtn" class="btn btn--ghost">Cancel</button>
+          <button type="submit" class="btn btn--primary">Save show</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div id="toast" class="toast" hidden></div>
+
+  <script src="app.js"></script>
+</body>
+</html>

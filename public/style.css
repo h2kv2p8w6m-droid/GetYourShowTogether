@@ -1,0 +1,383 @@
+:root {
+  --linen: #F2ECE9;
+  --ink: #203B4F;
+  --ink-soft: #5F7180;
+  --plum: #563C5C;
+  --lilac: #DED7E3;
+  --mineral: #88A396;
+  --mineral-soft: #E4EBE8;
+  --card: #FFFFFF;
+  --hairline: rgba(32, 59, 79, 0.15);
+
+  --font-display: 'Larken', Georgia, serif;
+  --font-eyebrow: 'Bebas Neue', sans-serif;
+  --font-body: 'Sofia Sans', system-ui, sans-serif;
+}
+
+@font-face {
+  font-family: 'Larken';
+  src: url('fonts/Larken-Thin.woff2') format('woff2');
+  font-weight: 200; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: 'Larken';
+  src: url('fonts/Larken-Light.woff2') format('woff2');
+  font-weight: 300; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: 'Larken';
+  src: url('fonts/Larken-Regular.woff2') format('woff2');
+  font-weight: 400; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: 'Larken';
+  src: url('fonts/Larken-Medium.woff2') format('woff2');
+  font-weight: 500; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: 'Larken';
+  src: url('fonts/Larken-Bold.woff2') format('woff2');
+  font-weight: 700; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: 'Larken';
+  src: url('fonts/Larken-Italic.woff2') format('woff2');
+  font-weight: 400; font-style: italic; font-display: swap;
+}
+@font-face {
+  font-family: 'Larken';
+  src: url('fonts/Larken-MediumItalic.woff2') format('woff2');
+  font-weight: 500; font-style: italic; font-display: swap;
+}
+@font-face {
+  font-family: 'Larken';
+  src: url('fonts/Larken-BoldItalic.woff2') format('woff2');
+  font-weight: 700; font-style: italic; font-display: swap;
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+  background: var(--linen);
+  color: var(--ink);
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+}
+
+#app {
+  max-width: 560px;
+  margin: 0 auto;
+  padding: 0 16px 120px;
+  min-height: 100vh;
+}
+
+.topbar {
+  padding: 28px 4px 16px;
+}
+
+.wordmark {
+  font-family: var(--font-eyebrow);
+  font-weight: 400;
+  font-size: 17px;
+  letter-spacing: 0.04em;
+  color: var(--plum);
+  text-transform: uppercase;
+}
+
+.greeting {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 30px;
+  margin-top: 6px;
+  line-height: 1.15;
+  color: var(--ink);
+}
+
+.stats {
+  display: flex;
+  gap: 10px;
+  margin: 4px 4px 20px;
+  overflow-x: auto;
+}
+
+.stat-chip {
+  flex: 1;
+  background: var(--card);
+  border: 1px solid var(--hairline);
+  border-radius: 14px;
+  padding: 12px 14px;
+  min-width: 92px;
+}
+
+.stat-chip--ember {
+  background: var(--lilac);
+  border-color: transparent;
+}
+
+.stat-num {
+  display: block;
+  font-family: var(--font-eyebrow);
+  font-weight: 400;
+  font-size: 26px;
+  color: var(--ink);
+  letter-spacing: 0.01em;
+}
+
+.stat-label {
+  display: block;
+  font-size: 11px;
+  color: var(--ink-soft);
+  margin-top: 2px;
+  font-weight: 600;
+}
+
+.event-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 0 4px;
+}
+
+.event-card {
+  background: var(--card);
+  border: 1px solid var(--hairline);
+  border-radius: 16px;
+  padding: 16px;
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+  cursor: pointer;
+}
+
+.event-card:active { transform: scale(0.99); }
+
+/* Signature element: the hallmark stamp — a forged-metal-style
+   badge showing days remaining until the nearest deadline. */
+.stamp {
+  flex-shrink: 0;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  border: 2px solid var(--ink);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.stamp::before {
+  content: "";
+  position: absolute;
+  inset: 4px;
+  border: 1px solid var(--ink);
+  border-radius: 50%;
+  opacity: 0.35;
+}
+
+.stamp-num {
+  font-family: var(--font-eyebrow);
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 1;
+  letter-spacing: 0.02em;
+}
+
+.stamp-unit {
+  position: absolute;
+  bottom: -7px;
+  background: var(--linen);
+  font-family: var(--font-eyebrow);
+  font-size: 9px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  padding: 0 4px;
+  color: var(--ink-soft);
+}
+
+.stamp--ember { border-color: var(--plum); color: var(--plum); }
+.stamp--ember .stamp-num { color: var(--plum); }
+.stamp--quiet { border-color: var(--hairline); }
+.stamp--quiet .stamp-num { color: var(--ink-soft); }
+
+.event-body { flex: 1; min-width: 0; }
+
+.event-name {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 18px;
+  margin: 0 0 4px;
+  color: var(--ink);
+}
+
+.event-meta {
+  font-size: 13px;
+  color: var(--ink-soft);
+  margin: 0 0 8px;
+  font-family: var(--font-body);
+}
+
+.event-tags {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.tag {
+  font-family: var(--font-eyebrow);
+  font-size: 11.5px;
+  padding: 3px 9px;
+  border-radius: 100px;
+  background: var(--mineral-soft);
+  color: var(--mineral);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.tag--warn { background: var(--lilac); color: var(--plum); }
+
+.empty-state {
+  text-align: center;
+  padding: 60px 24px;
+  color: var(--ink-soft);
+  font-family: var(--font-body);
+}
+
+.empty-stamp {
+  width: 64px;
+  height: 64px;
+  margin: 0 auto 16px;
+  border: 2px dashed var(--hairline);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28px;
+  color: var(--hairline);
+}
+
+.fab {
+  position: fixed;
+  right: 20px;
+  bottom: 28px;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  border: none;
+  background: var(--plum);
+  color: #fff;
+  font-size: 30px;
+  line-height: 1;
+  box-shadow: 0 8px 20px rgba(86, 60, 92, 0.35);
+  cursor: pointer;
+}
+
+.fab:active { transform: scale(0.95); }
+
+.sheet-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(32, 59, 79, 0.45);
+  display: flex;
+  align-items: flex-end;
+  z-index: 50;
+}
+
+.sheet {
+  background: var(--linen);
+  width: 100%;
+  max-height: 88vh;
+  overflow-y: auto;
+  border-radius: 20px 20px 0 0;
+  padding: 10px 20px 28px;
+}
+
+.sheet-handle {
+  width: 40px;
+  height: 4px;
+  background: var(--hairline);
+  border-radius: 4px;
+  margin: 6px auto 14px;
+}
+
+.sheet h2 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 22px;
+  margin: 0 0 16px;
+  color: var(--ink);
+}
+
+#eventForm label {
+  display: block;
+  font-size: 12.5px;
+  color: var(--ink-soft);
+  margin-bottom: 12px;
+  font-weight: 600;
+  font-family: var(--font-body);
+}
+
+#eventForm input,
+#eventForm textarea {
+  display: block;
+  width: 100%;
+  margin-top: 5px;
+  padding: 11px 12px;
+  border: 1px solid var(--hairline);
+  border-radius: 10px;
+  background: var(--card);
+  font-family: var(--font-body);
+  font-size: 15px;
+  color: var(--ink);
+}
+
+#eventForm input:focus,
+#eventForm textarea:focus {
+  outline: 2px solid var(--mineral);
+  outline-offset: 1px;
+}
+
+.row {
+  display: flex;
+  gap: 10px;
+}
+.row label { flex: 1; }
+
+.sheet-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 8px;
+}
+
+.btn {
+  flex: 1;
+  padding: 13px;
+  border-radius: 10px;
+  border: none;
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 15px;
+  cursor: pointer;
+}
+
+.btn--primary { background: var(--plum); color: #fff; }
+.btn--ghost { background: transparent; color: var(--ink-soft); border: 1px solid var(--hairline); }
+
+.toast {
+  position: fixed;
+  bottom: 100px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--ink);
+  color: var(--linen);
+  padding: 10px 18px;
+  border-radius: 100px;
+  font-size: 13.5px;
+  font-family: var(--font-body);
+  z-index: 60;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .event-card, .fab { transition: none !important; }
+}
