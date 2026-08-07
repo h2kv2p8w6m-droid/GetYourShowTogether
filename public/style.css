@@ -520,7 +520,7 @@ button:focus-visible, a:focus-visible { outline: 3px solid rgba(86, 60, 92, .28)
     grid-column: 1 / -1;
   }
   .view[data-view="home"] > .greeting { grid-row: 1; }
-  .view[data-view="home"] > .greeting-support { grid-row: 2; margin-bottom: 48px; }
+  .view[data-view="home"] > .greeting-support { grid-row: 2; margin-bottom: 64px; }
   .view[data-view="home"] > .section-heading--attention,
   .view[data-view="home"] > .attention-card {
     grid-column: 1;
@@ -536,7 +536,7 @@ button:focus-visible, a:focus-visible { outline: 3px solid rgba(86, 60, 92, .28)
   .view[data-view="home"] > .section-heading--snapshot,
   .view[data-view="home"] > .ytd-grid,
   .view[data-view="home"] > .ytd-footnote { grid-column: 1 / -1; }
-  .view[data-view="home"] > .section-heading--snapshot { grid-row: 5; margin-top: 6px; }
+  .view[data-view="home"] > .section-heading--snapshot { grid-row: 5; margin-top: 22px; }
   .view[data-view="home"] > .ytd-grid { grid-row: 6; }
   .view[data-view="home"] > .ytd-footnote { grid-row: 7; }
   .view[data-view="home"] > .quick-actions--footer { grid-column: 1 / -1; grid-row: 8; }
