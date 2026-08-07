@@ -90,6 +90,8 @@ module.exports = async (req, res) => {
     // ---- Needs Attention ----
     // "Home Priority" is a pre-computed text label from Airtable itself
     // (e.g. "Prepare for event", "Enter post-event results") — use it directly.
+    // Only overdue and due-today items are surfaced here (see public/app.js);
+    // notes/attachments are included so the side peek panel has real content.
     const needsAttention = applications
       .map((a) => {
         const f = a.fields;
@@ -102,6 +104,11 @@ module.exports = async (req, res) => {
           title: relatedEventFields?.["Event Name"] || f["Cycle Name"] || "Untitled",
           deadline: f["Application Deadline"] || f["Payment Due Date"] || null,
           daysUntil: f["Days Until Deadline"] ?? null,
+          notes: f["Cycle Notes"] || f["Confirmation Details"] || null,
+          attachments: (f["Application Packet"] || []).map((att) => ({
+            name: att.filename,
+            url: att.url,
+          })),
         };
       })
       .filter(Boolean)
@@ -154,7 +161,7 @@ module.exports = async (req, res) => {
 
     res.status(200).json({
       artistName: artist.fields["Name"] || "there",
-      needsAttention: needsAttention.slice(0, 5),
+      needsAttention,
       ytd: { sales, expenses, netIncome },
       nextEvent,
     });

@@ -3,11 +3,12 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-<meta name="theme-color" content="#F2ECE9" />
+<meta name="theme-color" content="#F3F6F5" />
 <title>Get Your Show Together</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Sofia+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:ital@1&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tabler-icons/2.44.0/iconfont/tabler-icons.min.css">
 <link rel="stylesheet" href="style.css" />
 </head>
 <body>
@@ -17,13 +18,13 @@
     <!-- Desktop sidebar / mobile bottom nav share this data -->
     <nav id="sidebar" class="sidebar">
       <img src="logo.png" alt="Get Your Show Together" class="sidebar-logo" />
-      <button class="nav-item is-active" data-view="home">🏠 Home</button>
-      <button class="nav-item" data-view="shows">📅 Shows</button>
-      <button class="nav-item" data-view="tasks">✅ Tasks</button>
-      <button class="nav-item" data-view="expenses">💲 Expenses</button>
-      <button class="nav-item" data-view="contacts">👥 Contacts</button>
-      <button class="nav-item" data-view="files">📁 Files</button>
-      <button class="nav-item" data-view="reviews">⭐ Reviews</button>
+      <button class="nav-item is-active" data-view="home"><i class="ti ti-layout-dashboard icon" aria-hidden="true"></i>Dashboard</button>
+      <button class="nav-item" data-view="shows"><i class="ti ti-calendar-event icon" aria-hidden="true"></i>Shows</button>
+      <button class="nav-item" data-view="tasks"><i class="ti ti-checkbox icon" aria-hidden="true"></i>Tasks</button>
+      <button class="nav-item" data-view="expenses"><i class="ti ti-currency-dollar icon" aria-hidden="true"></i>Expenses</button>
+      <button class="nav-item" data-view="contacts"><i class="ti ti-users icon" aria-hidden="true"></i>Contacts</button>
+      <button class="nav-item" data-view="files"><i class="ti ti-folder icon" aria-hidden="true"></i>Files</button>
+      <button class="nav-item" data-view="reviews"><i class="ti ti-star icon" aria-hidden="true"></i>Reviews</button>
       <div class="sidebar-user" id="sidebarUser"></div>
     </nav>
 
@@ -35,44 +36,46 @@
           <img src="logo.png" alt="Get Your Show Together" class="mobile-logo" />
         </header>
 
-        <h1 class="greeting" id="greeting">Welcome back!</h1>
+        <h1 class="greeting" id="greeting">Welcome back.</h1>
+        <p class="quote" id="quote"></p>
 
-        <div class="attention-card" id="attentionCard" hidden>
-          <div class="attention-icon">🔔<span class="attention-badge" id="attentionCount">0</span></div>
-          <div class="attention-body">
-            <div class="attention-label">Needs Attention</div>
-            <div class="attention-title" id="attentionTitle">— items need you</div>
-            <ul class="attention-list" id="attentionList"></ul>
-          </div>
+        <div class="quick-actions">
+          <button class="quick-btn quick-btn--primary" data-action="add-event">+ ADD EVENT</button>
+          <button class="quick-btn quick-btn--secondary" data-action="add-expense">+ ENTER EXP</button>
+          <button class="quick-btn quick-btn--secondary" data-action="add-sale">+ ENTER SALES</button>
         </div>
 
-        <div class="section-label">YTD Snapshot</div>
         <div class="ytd-grid">
           <div class="ytd-tile">
-            <div class="ytd-label">Sales</div>
-            <div class="ytd-value" id="ytdSales">$0</div>
+            <div class="ytd-tile-head">
+              <div class="ytd-tile-icon ytd-tile-icon--mineral"><i class="ti ti-trending-up" aria-hidden="true"></i></div>
+              <div class="ytd-label">Sales YTD</div>
+            </div>
+            <div class="ytd-value ytd-value--sales" id="ytdSales">$0</div>
           </div>
           <div class="ytd-tile">
-            <div class="ytd-label">Expenses</div>
+            <div class="ytd-tile-head">
+              <div class="ytd-tile-icon ytd-tile-icon--plum"><i class="ti ti-receipt-2" aria-hidden="true"></i></div>
+              <div class="ytd-label">Exp YTD</div>
+            </div>
             <div class="ytd-value ytd-value--expense" id="ytdExpenses">$0</div>
           </div>
           <div class="ytd-tile">
-            <div class="ytd-label">Net Income</div>
-            <div class="ytd-value ytd-value--net" id="ytdNet">$0</div>
+            <div class="ytd-tile-head">
+              <div class="ytd-tile-icon" id="ytdNetIcon"><i class="ti ti-scale" aria-hidden="true"></i></div>
+              <div class="ytd-label">Net Income</div>
+            </div>
+            <div class="ytd-value" id="ytdNet">$0</div>
           </div>
         </div>
         <div class="ytd-footnote">Sales tax excluded</div>
 
-        <div class="section-label">Next Scheduled Event</div>
+        <div class="section-heading"><i class="ti ti-bell icon" aria-hidden="true"></i>Needs your attention</div>
+        <div class="attention-card" id="attentionCard"></div>
+
+        <div class="section-heading"><i class="ti ti-calendar-event icon" aria-hidden="true"></i>Next scheduled event</div>
         <div class="next-event-card" id="nextEventCard">
           <div class="next-event-empty" id="nextEventEmpty">No upcoming confirmed shows yet.</div>
-        </div>
-
-        <div class="quick-actions">
-          <button class="quick-btn" data-action="add-event">📅 Add Event</button>
-          <button class="quick-btn" data-action="view-events">🔍 View All Events</button>
-          <button class="quick-btn" data-action="add-expense">💲 Enter Expense</button>
-          <button class="quick-btn" data-action="add-sale">🛍 Enter Sales</button>
         </div>
       </section>
 
@@ -88,21 +91,41 @@
 
     <!-- MOBILE BOTTOM NAV -->
     <nav class="bottom-nav">
-      <button class="bottom-item is-active" data-view="home"><span>🏠</span>Home</button>
-      <button class="bottom-item" data-view="shows"><span>📅</span>Shows</button>
-      <button class="bottom-item" data-view="tasks"><span>✅</span>Tasks</button>
-      <button class="bottom-item" data-view="expenses"><span>💲</span>Expenses</button>
-      <button class="bottom-item" id="moreBtn"><span>⋯</span>More</button>
+      <button class="bottom-item is-active" data-view="home"><i class="ti ti-layout-dashboard icon" aria-hidden="true"></i>Dashboard</button>
+      <button class="bottom-item" data-view="shows"><i class="ti ti-calendar-event icon" aria-hidden="true"></i>Shows</button>
+      <button class="bottom-item" data-view="tasks"><i class="ti ti-checkbox icon" aria-hidden="true"></i>Tasks</button>
+      <button class="bottom-item" data-view="expenses"><i class="ti ti-currency-dollar icon" aria-hidden="true"></i>Expenses</button>
+      <button class="bottom-item" id="moreBtn"><i class="ti ti-dots icon" aria-hidden="true"></i>More</button>
     </nav>
 
     <!-- MORE SHEET (mobile) -->
     <div class="sheet-backdrop" id="moreSheetBackdrop">
       <div class="sheet">
         <div class="sheet-handle"></div>
-        <button class="more-item" data-view="contacts">👥 Contacts</button>
-        <button class="more-item" data-view="files">📁 Files</button>
-        <button class="more-item" data-view="reviews">⭐ Reviews</button>
+        <button class="more-item" data-view="contacts"><i class="ti ti-users" aria-hidden="true"></i>Contacts</button>
+        <button class="more-item" data-view="files"><i class="ti ti-folder" aria-hidden="true"></i>Files</button>
+        <button class="more-item" data-view="reviews"><i class="ti ti-star" aria-hidden="true"></i>Reviews</button>
         <button class="btn btn--ghost" id="closeMoreBtn">Close</button>
+      </div>
+    </div>
+
+    <!-- SIDE PEEK -->
+    <div class="peek-backdrop" id="peekBackdrop" hidden>
+      <div class="peek-panel">
+        <div class="peek-head">
+          <h2 class="peek-title" id="peekTitle"></h2>
+          <button class="peek-close" id="peekClose" aria-label="Close"><i class="ti ti-x" aria-hidden="true"></i></button>
+        </div>
+        <div class="peek-field-label">Action</div>
+        <div class="peek-action" id="peekAction"></div>
+        <div class="peek-field-label" id="peekDueLabel" hidden>Due date</div>
+        <div class="peek-due" id="peekDue" hidden><i class="ti ti-calendar" aria-hidden="true"></i><span id="peekDueText"></span></div>
+        <div class="peek-field-label">Status</div>
+        <span class="peek-tag" id="peekTag"></span>
+        <div class="peek-field-label" id="peekNotesLabel" hidden>Notes</div>
+        <div class="peek-notes" id="peekNotes" hidden></div>
+        <div class="peek-field-label peek-attachments-label" id="peekAttachmentsLabel" hidden>Attachments</div>
+        <div id="peekAttachments"></div>
       </div>
     </div>
 

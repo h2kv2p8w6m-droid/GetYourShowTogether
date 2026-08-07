@@ -32,11 +32,29 @@ moreSheetBackdrop.hidden = true;
 // ---- Quick actions (stubbed for now) ----
 document.querySelectorAll(".quick-btn").forEach((btn) => {
   btn.addEventListener("click", () => {
-    const action = btn.dataset.action;
-    if (action === "view-events") { showView("shows"); return; }
     alert("This action is coming in the next build pass.");
   });
 });
+
+// ---- Rotating art/maker quote ----
+const QUOTES = [
+  { text: "Creativity takes courage.", author: "Henri Matisse" },
+  { text: "Every artist was first an amateur.", author: "Ralph Waldo Emerson" },
+  { text: "The chief enemy of creativity is good sense.", author: "Pablo Picasso" },
+  { text: "Art enables us to find ourselves and lose ourselves at the same time.", author: "Thomas Merton" },
+  { text: "Simplicity is the ultimate sophistication.", author: "Leonardo da Vinci" },
+];
+(function setQuote() {
+  const q = QUOTES[Math.floor(Math.random() * QUOTES.length)];
+  document.getElementById("quote").textContent = `"${q.text}" — ${q.author}`;
+})();
+
+function timeGreeting() {
+  const h = new Date().getHours();
+  if (h < 12) return "Good morning";
+  if (h < 17) return "Good afternoon";
+  return "Good evening";
+}
 
 // ---- Formatting helpers ----
 function money(n) {
@@ -44,7 +62,7 @@ function money(n) {
 }
 function fmtDate(iso) {
   if (!iso) return null;
-  const d = new Date(iso);
+  const d = new Date(iso + (iso.length === 10 ? "T00:00:00" : ""));
   return d.toLocaleDateString(undefined, { month: "short", day: "numeric" });
 }
 function fmtDateTime(iso) {
@@ -62,6 +80,62 @@ function showLinkError(title, message) {
   document.getElementById("main").innerHTML =
     `<div class="placeholder"><h2>${escapeHtml(title)}</h2><p>${escapeHtml(message)}</p></div>`;
 }
+
+// ---- Side peek ----
+const peekBackdrop = document.getElementById("peekBackdrop");
+function openPeek(item) {
+  document.getElementById("peekTitle").textContent = item.title;
+  document.getElementById("peekAction").textContent = item.action;
+
+  const dueLabel = document.getElementById("peekDueLabel");
+  const dueRow = document.getElementById("peekDue");
+  if (item.deadline) {
+    dueLabel.hidden = false;
+    dueRow.hidden = false;
+    document.getElementById("peekDueText").textContent = fmtDate(item.deadline);
+  } else {
+    dueLabel.hidden = true;
+    dueRow.hidden = true;
+  }
+
+  const tag = document.getElementById("peekTag");
+  const overdue = item.daysUntil !== null && item.daysUntil < 0;
+  tag.textContent = overdue ? "Overdue" : "Due today";
+  tag.className = "peek-tag" + (overdue ? " peek-tag--overdue" : "");
+
+  const notesLabel = document.getElementById("peekNotesLabel");
+  const notes = document.getElementById("peekNotes");
+  if (item.notes) {
+    notesLabel.hidden = false;
+    notes.hidden = false;
+    notes.textContent = item.notes;
+  } else {
+    notesLabel.hidden = true;
+    notes.hidden = true;
+  }
+
+  const attLabel = document.getElementById("peekAttachmentsLabel");
+  const attWrap = document.getElementById("peekAttachments");
+  if (item.attachments && item.attachments.length) {
+    attLabel.hidden = false;
+    attWrap.innerHTML = item.attachments
+      .map(
+        (a) =>
+          `<div class="peek-attachment"><a href="${escapeHtml(a.url)}" target="_blank" rel="noopener"><i class="ti ti-file-text" aria-hidden="true"></i>${escapeHtml(a.name)}</a></div>`
+      )
+      .join("");
+  } else {
+    attLabel.hidden = true;
+    attWrap.innerHTML = "";
+  }
+
+  peekBackdrop.hidden = false;
+}
+function closePeek() { peekBackdrop.hidden = true; }
+document.getElementById("peekClose").addEventListener("click", closePeek);
+peekBackdrop.addEventListener("click", (e) => {
+  if (e.target === peekBackdrop) closePeek();
+});
 
 // ---- Load Home data ----
 async function loadHome() {
@@ -85,30 +159,49 @@ async function loadHome() {
     }
 
     document.getElementById("sidebarUser").textContent = data.artistName;
-    document.getElementById("greeting").textContent = `Welcome back, ${data.artistName}!`;
+    document.getElementById("greeting").textContent = `${timeGreeting()}, ${data.artistName}.`;
 
-    // Needs Attention
+    // Needs Attention — grouped into Overdue / Due today only
+    const overdue = data.needsAttention.filter((i) => i.daysUntil !== null && i.daysUntil < 0);
+    const dueToday = data.needsAttention.filter((i) => i.daysUntil === 0);
+
+    const rowHtml = (item) => {
+      const dueText = item.daysUntil < 0 ? fmtDate(item.deadline) : "Today";
+      return `<button class="attention-row" data-id="${item.id}"><i class="ti ti-chevron-right chevron" aria-hidden="true"></i><span>${escapeHtml(item.action)} — ${escapeHtml(item.title)}</span><span class="due">${dueText}</span></button>`;
+    };
+
     const attentionCard = document.getElementById("attentionCard");
-    if (data.needsAttention.length) {
-      attentionCard.hidden = false;
-      document.getElementById("attentionCount").textContent = data.needsAttention.length;
-      document.getElementById("attentionTitle").textContent =
-        `${data.needsAttention.length} item${data.needsAttention.length === 1 ? "" : "s"} need${data.needsAttention.length === 1 ? "s" : ""} you`;
-      document.getElementById("attentionList").innerHTML = data.needsAttention
-        .map((item) => {
-          const dayLabel =
-            item.daysUntil === null ? "" :
-            item.daysUntil < 0 ? `${Math.abs(item.daysUntil)}d overdue` :
-            item.daysUntil === 0 ? "Today" : `${item.daysUntil}d`;
-          return `<li><span>${escapeHtml(item.action)} — ${escapeHtml(item.title)}</span><span class="days">${dayLabel}</span></li>`;
-        })
-        .join("");
+    if (!overdue.length && !dueToday.length) {
+      attentionCard.innerHTML = `<div class="attention-empty">Nothing overdue or due today — nice.</div>`;
+    } else {
+      attentionCard.innerHTML =
+        (overdue.length
+          ? `<div class="attention-group-label attention-group-label--overdue">Overdue</div>${overdue.map(rowHtml).join("")}`
+          : "") +
+        (dueToday.length
+          ? `<div class="attention-group-label attention-group-label--today">Due today</div>${dueToday.map(rowHtml).join("")}`
+          : "");
     }
+    attentionCard.querySelectorAll(".attention-row").forEach((row) => {
+      row.addEventListener("click", () => {
+        const item = data.needsAttention.find((i) => i.id === row.dataset.id);
+        if (item) openPeek(item);
+      });
+    });
 
     // YTD
     document.getElementById("ytdSales").textContent = money(data.ytd.sales);
     document.getElementById("ytdExpenses").textContent = money(data.ytd.expenses);
-    document.getElementById("ytdNet").textContent = money(data.ytd.netIncome);
+    const netEl = document.getElementById("ytdNet");
+    const netIconEl = document.getElementById("ytdNetIcon");
+    netEl.textContent = money(data.ytd.netIncome);
+    if (data.ytd.netIncome < 0) {
+      netEl.className = "ytd-value ytd-value--net-negative";
+      netIconEl.className = "ytd-tile-icon ytd-tile-icon--red";
+    } else {
+      netEl.className = "ytd-value ytd-value--net-positive";
+      netIconEl.className = "ytd-tile-icon ytd-tile-icon--positive";
+    }
 
     // Next Event
     const card = document.getElementById("nextEventCard");
