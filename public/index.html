@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<meta name="theme-color" content="#F2ECE9" />
+<title>Get Your Show Together</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Sofia+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <div id="shell">
+
+    <!-- Desktop sidebar / mobile bottom nav share this data -->
+    <nav id="sidebar" class="sidebar">
+      <img src="logo.png" alt="Get Your Show Together" class="sidebar-logo" />
+      <button class="nav-item is-active" data-view="home">🏠 Home</button>
+      <button class="nav-item" data-view="shows">📅 Shows</button>
+      <button class="nav-item" data-view="tasks">✅ Tasks</button>
+      <button class="nav-item" data-view="expenses">💲 Expenses</button>
+      <button class="nav-item" data-view="contacts">👥 Contacts</button>
+      <button class="nav-item" data-view="files">📁 Files</button>
+      <button class="nav-item" data-view="reviews">⭐ Reviews</button>
+      <div class="sidebar-user">Kelley</div>
+    </nav>
+
+    <main id="main">
+
+      <!-- HOME VIEW -->
+      <section class="view is-active" data-view="home">
+        <header class="mobile-topbar">
+          <img src="logo.png" alt="Get Your Show Together" class="mobile-logo" />
+        </header>
+
+        <h1 class="greeting" id="greeting">Welcome back!</h1>
+
+        <div class="attention-card" id="attentionCard" hidden>
+          <div class="attention-icon">🔔<span class="attention-badge" id="attentionCount">0</span></div>
+          <div class="attention-body">
+            <div class="attention-label">Needs Attention</div>
+            <div class="attention-title" id="attentionTitle">— items need you</div>
+            <ul class="attention-list" id="attentionList"></ul>
+          </div>
+        </div>
+
+        <div class="section-label">YTD Snapshot</div>
+        <div class="ytd-grid">
+          <div class="ytd-tile">
+            <div class="ytd-label">Sales</div>
+            <div class="ytd-value" id="ytdSales">$0</div>
+          </div>
+          <div class="ytd-tile">
+            <div class="ytd-label">Expenses</div>
+            <div class="ytd-value ytd-value--expense" id="ytdExpenses">$0</div>
+          </div>
+          <div class="ytd-tile">
+            <div class="ytd-label">Net Income</div>
+            <div class="ytd-value ytd-value--net" id="ytdNet">$0</div>
+          </div>
+        </div>
+        <div class="ytd-footnote">Sales tax excluded</div>
+
+        <div class="section-label">Next Scheduled Event</div>
+        <div class="next-event-card" id="nextEventCard">
+          <div class="next-event-empty" id="nextEventEmpty">No upcoming confirmed shows yet.</div>
+        </div>
+
+        <div class="quick-actions">
+          <button class="quick-btn" data-action="add-event">📅 Add Event</button>
+          <button class="quick-btn" data-action="view-events">🔍 View All Events</button>
+          <button class="quick-btn" data-action="add-expense">💲 Enter Expense</button>
+          <button class="quick-btn" data-action="add-sale">🛍 Enter Sales</button>
+        </div>
+      </section>
+
+      <!-- PLACEHOLDER VIEWS -->
+      <section class="view" data-view="shows"><div class="placeholder"><h2>Shows</h2><p>Coming next — the full list of every show you're considering, applying to, or attending.</p></div></section>
+      <section class="view" data-view="tasks"><div class="placeholder"><h2>Tasks</h2><p>Coming next — Today, Overdue, Upcoming, and Completed views across all your shows.</p></div></section>
+      <section class="view" data-view="expenses"><div class="placeholder"><h2>Expenses</h2><p>Coming next — costs, fees, and profitability per show.</p></div></section>
+      <section class="view" data-view="contacts"><div class="placeholder"><h2>Contacts</h2><p>Coming next — promoters, venues, and organizers.</p></div></section>
+      <section class="view" data-view="files"><div class="placeholder"><h2>Files</h2><p>Coming next — applications, permits, and receipts.</p></div></section>
+      <section class="view" data-view="reviews"><div class="placeholder"><h2>Reviews</h2><p>Coming next — your post-show ratings and reapply decisions.</p></div></section>
+
+    </main>
+
+    <!-- MOBILE BOTTOM NAV -->
+    <nav class="bottom-nav">
+      <button class="bottom-item is-active" data-view="home"><span>🏠</span>Home</button>
+      <button class="bottom-item" data-view="shows"><span>📅</span>Shows</button>
+      <button class="bottom-item" data-view="tasks"><span>✅</span>Tasks</button>
+      <button class="bottom-item" data-view="expenses"><span>💲</span>Expenses</button>
+      <button class="bottom-item" id="moreBtn"><span>⋯</span>More</button>
+    </nav>
+
+    <!-- MORE SHEET (mobile) -->
+    <div class="sheet-backdrop" id="moreSheetBackdrop">
+      <div class="sheet">
+        <div class="sheet-handle"></div>
+        <button class="more-item" data-view="contacts">👥 Contacts</button>
+        <button class="more-item" data-view="files">📁 Files</button>
+        <button class="more-item" data-view="reviews">⭐ Reviews</button>
+        <button class="btn btn--ghost" id="closeMoreBtn">Close</button>
+      </div>
+    </div>
+
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

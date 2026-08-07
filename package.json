@@ -1,0 +1,6 @@
+{
+  "name": "get-your-show-together",
+  "version": "0.2.0",
+  "private": true,
+  "engines": { "node": ">=18" }
+}
