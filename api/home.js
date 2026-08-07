@@ -68,11 +68,11 @@ module.exports = async (req, res) => {
     ]);
 
     const applications = applicationsAll.filter((a) =>
-      (a.fields["Artist"] || []).some((link) => link.id === artist.id)
+      (a.fields["Artist"] || []).includes(artist.id)
     );
     const applicationIds = new Set(applications.map((a) => a.id));
     const results = resultsAll.filter((r) =>
-      (r.fields["Related Application / Booking"] || []).some((link) => applicationIds.has(link.id))
+      (r.fields["Related Application / Booking"] || []).some((id) => applicationIds.has(id))
     );
 
     const eventsById = Object.fromEntries(events.map((e) => [e.id, e.fields]));
@@ -94,11 +94,12 @@ module.exports = async (req, res) => {
       .map((a) => {
         const f = a.fields;
         if (!f["Home Priority"]) return null;
-        const relatedEvent = (f["Related Event"] || [])[0];
+        const relatedEventId = (f["Related Event"] || [])[0];
+        const relatedEventFields = relatedEventId ? eventsById[relatedEventId] : null;
         return {
           id: a.id,
           action: f["Home Priority"],
-          title: relatedEvent?.name || f["Cycle Name"] || "Untitled",
+          title: relatedEventFields?.["Event Name"] || f["Cycle Name"] || "Untitled",
           deadline: f["Application Deadline"] || f["Payment Due Date"] || null,
           daysUntil: f["Days Until Deadline"] ?? null,
         };
@@ -128,8 +129,8 @@ module.exports = async (req, res) => {
         if (status !== "Confirmed") return null;
         const endsAt = f["Event Ends"];
         if (!endsAt || new Date(endsAt) < now) return null;
-        const relatedEvent = (f["Related Event"] || [])[0];
-        const eventFields = relatedEvent ? eventsById[relatedEvent.id] : {};
+        const relatedEventId = (f["Related Event"] || [])[0];
+        const eventFields = relatedEventId ? eventsById[relatedEventId] : {};
         const resultFields = resultsByAppId[a.id] || {};
         return { f, eventFields, resultFields, endsAt };
       })
