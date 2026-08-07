@@ -12,6 +12,9 @@
   --mineral: #88a396;
   --mineral-deep: #45675a;
   --mineral-tint: #e5ede9;
+  --show-blue: #3f708a;
+  --show-blue-deep: #2d576f;
+  --show-blue-tint: #e4eef3;
   --lilac: #ded7e3;
   --red: #ad443e;
   --red-tint: #fae9e6;
@@ -93,16 +96,17 @@ button:focus-visible, a:focus-visible { outline: 3px solid rgba(86, 60, 92, .28)
 }
 
 .quick-actions {
-  display: flex;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 10px;
   margin: 28px 0 0;
-  flex-wrap: wrap;
 }
 .quick-actions--footer {
   padding-top: 22px;
   border-top: 1px solid var(--border);
 }
 .quick-btn {
+  width: 100%;
   min-height: 44px;
   padding: 0 17px;
   border-radius: 12px;
@@ -171,8 +175,9 @@ button:focus-visible, a:focus-visible { outline: 3px solid rgba(86, 60, 92, .28)
   color: #fff;
   box-shadow: 0 6px 14px rgba(173, 68, 62, .22);
 }
-.section-heading--event .icon { background: var(--mineral-deep); }
-.section-heading--snapshot .icon { background: var(--plum); }
+.section-heading--event { color: var(--show-blue-deep); }
+.section-heading--event .icon { background: var(--show-blue); }
+.section-heading--snapshot .icon { background: var(--mineral-deep); }
 .section-heading--snapshot { margin-top: 34px; }
 
 .attention-card,
@@ -243,7 +248,7 @@ button:focus-visible, a:focus-visible { outline: 3px solid rgba(86, 60, 92, .28)
   position: absolute;
   inset: 0 0 0 auto;
   width: 6px;
-  background: linear-gradient(var(--mineral), var(--plum));
+  background: linear-gradient(var(--show-blue), var(--show-blue-deep));
 }
 .empty-state { display: flex; gap: 16px; align-items: center; }
 .empty-state-icon {
@@ -253,7 +258,7 @@ button:focus-visible, a:focus-visible { outline: 3px solid rgba(86, 60, 92, .28)
   display: grid;
   place-items: center;
   flex: none;
-  background: var(--mineral-deep);
+  background: var(--show-blue);
   color: #fff;
   font-size: 16px;
 }
