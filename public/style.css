@@ -322,7 +322,8 @@ button:focus-visible, a:focus-visible { outline: 3px solid rgba(86, 60, 92, .28)
 .ytd-tile:nth-child(2)::before { background: linear-gradient(#8b6e91, var(--plum)); }
 .ytd-tile:nth-child(3)::before { background: linear-gradient(var(--salmon), var(--salmon-deep)); }
 .ytd-tile:nth-child(2)::after { background: var(--plum-tint); }
-.ytd-tile:nth-child(3)::after { background: var(--salmon-tint); }
+.ytd-tile:first-child::after { background: var(--mineral); opacity: .28; }
+.ytd-tile:nth-child(3)::after { background: var(--salmon-tint); opacity: .22; }
 .ytd-tile-head { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; position: relative; z-index: 1; }
 .ytd-tile-icon {
   width: 29px;
@@ -332,11 +333,11 @@ button:focus-visible, a:focus-visible { outline: 3px solid rgba(86, 60, 92, .28)
   place-items: center;
   font-size: 16px;
 }
-.ytd-tile-icon--mineral { background: var(--mineral); color: var(--ink-deep); }
+.ytd-tile-icon--mineral { background: var(--mineral); color: #fff; }
 .ytd-tile-icon--positive { background: var(--mineral-deep); color: #fff; }
 .ytd-tile-icon--plum { background: var(--plum); color: #fff; }
-.ytd-tile-icon--red { background: var(--salmon); color: var(--ink-deep); }
-#ytdNetIcon { background: var(--salmon); color: var(--ink-deep); }
+.ytd-tile-icon--red { background: var(--salmon); color: #fff; }
+#ytdNetIcon { background: var(--salmon); color: #fff; }
 .ytd-label { color: var(--text-soft); font-size: 1rem; font-weight: 700; text-transform: uppercase; letter-spacing: .09em; }
 .ytd-tile:first-child .ytd-label { color: var(--mineral-deep); }
 .ytd-value { position: relative; z-index: 1; font-size: 2rem; font-weight: 750; letter-spacing: -.045em; }
