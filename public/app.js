@@ -47,6 +47,19 @@ document.querySelectorAll(".quick-btn").forEach((btn) => {
   });
 });
 
+// ---- Rotating art/maker quote ----
+const QUOTES = [
+  { text: "Creativity takes courage.", author: "Henri Matisse" },
+  { text: "Every artist was first an amateur.", author: "Ralph Waldo Emerson" },
+  { text: "The chief enemy of creativity is good sense.", author: "Pablo Picasso" },
+  { text: "Art enables us to find ourselves and lose ourselves at the same time.", author: "Thomas Merton" },
+  { text: "Simplicity is the ultimate sophistication.", author: "Leonardo da Vinci" },
+];
+(function setQuote() {
+  const q = QUOTES[Math.floor(Math.random() * QUOTES.length)];
+  document.getElementById("quote").textContent = `"${q.text}" — ${q.author}`;
+})();
+
 function timeGreeting() {
   const h = new Date().getHours();
   if (h < 12) return "Good morning";
