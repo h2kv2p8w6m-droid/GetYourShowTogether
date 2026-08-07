@@ -195,7 +195,7 @@ button:focus-visible, a:focus-visible { outline: 3px solid rgba(86, 60, 92, .28)
   position: absolute;
   inset: 0 0 0 auto;
   width: 6px;
-  background: linear-gradient(var(--mineral), var(--mineral-deep));
+  background: linear-gradient(#d77c73, var(--red));
 }
 .attention-empty { position: relative; padding: 27px 28px 27px 70px; color: var(--mineral-deep); font-size: 1rem; line-height: 1.5; }
 .attention-empty::before {
@@ -317,7 +317,7 @@ button:focus-visible, a:focus-visible { outline: 3px solid rgba(86, 60, 92, .28)
   z-index: 2;
 }
 .ytd-tile:nth-child(2)::before { background: linear-gradient(#8b6e91, var(--plum)); }
-.ytd-tile:nth-child(3)::before { background: linear-gradient(#d77c73, var(--red)); }
+.ytd-tile:nth-child(3)::before { background: linear-gradient(#3b5d74, var(--ink-deep)); }
 .ytd-tile:nth-child(2)::after { background: var(--plum-tint); }
 .ytd-tile:nth-child(3)::after { background: var(--red-tint); }
 .ytd-tile-head { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; position: relative; z-index: 1; }
@@ -331,7 +331,7 @@ button:focus-visible, a:focus-visible { outline: 3px solid rgba(86, 60, 92, .28)
 }
 .ytd-tile-icon--mineral, .ytd-tile-icon--positive { background: var(--mineral-deep); color: #fff; }
 .ytd-tile-icon--plum { background: var(--plum); color: #fff; }
-.ytd-tile-icon--red { background: var(--red); color: #fff; }
+.ytd-tile-icon--red { background: var(--ink); color: #fff; }
 .ytd-label { color: var(--text-soft); font-size: 1rem; font-weight: 700; text-transform: uppercase; letter-spacing: .09em; }
 .ytd-value { position: relative; z-index: 1; font-size: 2rem; font-weight: 750; letter-spacing: -.045em; }
 .ytd-value--sales, .ytd-value--net-positive { color: var(--mineral-deep); }
