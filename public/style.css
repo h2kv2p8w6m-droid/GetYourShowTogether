@@ -87,6 +87,10 @@ button:focus-visible, a:focus-visible { outline: 3px solid rgba(86, 60, 92, .28)
   font-size: 1rem;
   line-height: 1.5;
 }
+.quote {
+  font-family: "Playfair Display", Georgia, serif;
+  font-style: italic;
+}
 
 .quick-actions {
   display: flex;
