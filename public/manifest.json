@@ -1,0 +1,9 @@
+{
+  "name": "Get Your Show Together",
+  "short_name": "Show Together",
+  "start_url": ".",
+  "display": "standalone",
+  "background_color": "#FAF5EC",
+  "theme_color": "#FAF5EC",
+  "icons": []
+}
