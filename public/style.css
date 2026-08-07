@@ -82,7 +82,7 @@ button:focus-visible, a:focus-visible { outline: 3px solid rgba(86, 60, 92, .28)
   font-weight: 700;
 }
 .greeting-support {
-  margin: 9px 0 0;
+  margin: 9px 0 28px;
   color: var(--text-soft);
   font-size: 1rem;
   line-height: 1.5;
@@ -503,7 +503,7 @@ button:focus-visible, a:focus-visible { outline: 3px solid rgba(86, 60, 92, .28)
     grid-column: 1 / -1;
   }
   .view[data-view="home"] > .greeting { grid-row: 1; }
-  .view[data-view="home"] > .greeting-support { grid-row: 2; margin-bottom: 32px; }
+  .view[data-view="home"] > .greeting-support { grid-row: 2; margin-bottom: 48px; }
   .view[data-view="home"] > .section-heading--attention,
   .view[data-view="home"] > .attention-card {
     grid-column: 1;
