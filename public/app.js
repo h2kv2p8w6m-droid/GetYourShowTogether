@@ -172,7 +172,7 @@ async function loadHome() {
 
     const attentionCard = document.getElementById("attentionCard");
     if (!overdue.length && !dueToday.length) {
-      attentionCard.innerHTML = `<div class="attention-empty">Nothing overdue or due today — nice.</div>`;
+      attentionCard.innerHTML = `<div class="attention-empty">All clear. Go make something fire.</div>`;
     } else {
       attentionCard.innerHTML =
         (overdue.length
@@ -225,7 +225,7 @@ async function loadHome() {
       document.getElementById("sidebarUser").textContent = "Kelley";
       document.getElementById("mobileMenuUser").textContent = "Kelley";
       document.getElementById("greeting").textContent = `${timeGreeting()}, Kelley.`;
-      document.getElementById("attentionCard").innerHTML = `<div class="attention-empty">Nothing overdue or due today — you’re in good shape.</div>`;
+      document.getElementById("attentionCard").innerHTML = `<div class="attention-empty">All clear. Go make something fire.</div>`;
       document.getElementById("ytdSales").textContent = "$340";
       document.getElementById("ytdExpenses").textContent = "$989";
       document.getElementById("ytdNet").textContent = "−$649";
