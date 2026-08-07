@@ -157,20 +157,22 @@ button:focus-visible, a:focus-visible { outline: 3px solid rgba(86, 60, 92, .28)
   border-radius: 9px;
   display: grid;
   place-items: center;
-  background: var(--plum-tint);
-  color: var(--plum);
+  background: var(--plum);
+  color: #fff;
   font-size: 16px;
 }
 .section-heading--attention {
-  color: var(--plum);
+  color: var(--red);
   font-weight: 850;
   letter-spacing: .115em;
 }
 .section-heading--attention .icon {
-  background: var(--plum);
+  background: var(--red);
   color: #fff;
-  box-shadow: 0 6px 14px rgba(86, 60, 92, .22);
+  box-shadow: 0 6px 14px rgba(173, 68, 62, .22);
 }
+.section-heading--event .icon { background: var(--mineral-deep); }
+.section-heading--snapshot .icon { background: var(--plum); }
 .section-heading--snapshot { margin-top: 34px; }
 
 .attention-card,
@@ -245,15 +247,15 @@ button:focus-visible, a:focus-visible { outline: 3px solid rgba(86, 60, 92, .28)
 }
 .empty-state { display: flex; gap: 16px; align-items: center; }
 .empty-state-icon {
-  width: 50px;
-  height: 50px;
-  border-radius: 15px;
+  width: 29px;
+  height: 29px;
+  border-radius: 9px;
   display: grid;
   place-items: center;
   flex: none;
-  background: var(--mineral-tint);
-  color: var(--mineral-deep);
-  font-size: 23px;
+  background: var(--mineral-deep);
+  color: #fff;
+  font-size: 16px;
 }
 .empty-state strong, .empty-state span { display: block; }
 .empty-state strong { color: var(--ink); margin-bottom: 5px; }
@@ -315,16 +317,16 @@ button:focus-visible, a:focus-visible { outline: 3px solid rgba(86, 60, 92, .28)
 .ytd-tile:nth-child(3)::after { background: var(--red-tint); }
 .ytd-tile-head { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; position: relative; z-index: 1; }
 .ytd-tile-icon {
-  width: 34px;
-  height: 34px;
-  border-radius: 11px;
+  width: 29px;
+  height: 29px;
+  border-radius: 9px;
   display: grid;
   place-items: center;
-  font-size: 17px;
+  font-size: 16px;
 }
-.ytd-tile-icon--mineral, .ytd-tile-icon--positive { background: var(--mineral-tint); color: var(--mineral-deep); }
-.ytd-tile-icon--plum { background: var(--plum-tint); color: var(--plum); }
-.ytd-tile-icon--red { background: var(--red-tint); color: var(--red); }
+.ytd-tile-icon--mineral, .ytd-tile-icon--positive { background: var(--mineral-deep); color: #fff; }
+.ytd-tile-icon--plum { background: var(--plum); color: #fff; }
+.ytd-tile-icon--red { background: var(--red); color: #fff; }
 .ytd-label { color: var(--text-soft); font-size: .72rem; font-weight: 700; text-transform: uppercase; letter-spacing: .09em; }
 .ytd-value { position: relative; z-index: 1; font-size: 2rem; font-weight: 750; letter-spacing: -.045em; }
 .ytd-value--sales, .ytd-value--net-positive { color: var(--mineral-deep); }
