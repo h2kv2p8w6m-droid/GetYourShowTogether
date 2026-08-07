@@ -53,13 +53,38 @@ function fmtDateTime(iso) {
   return d.toLocaleString(undefined, { month: "short", day: "numeric", hour: "numeric", minute: "2-digit" });
 }
 
+// ---- Artist link (?u=...) ----
+// Artists open a link like: https://yourapp.vercel.app/?u=kelley-h27k9v
+// The "u" value is their private Link ID from the Artists table.
+const artistLinkId = new URLSearchParams(window.location.search).get("u");
+
+function showLinkError(title, message) {
+  document.getElementById("main").innerHTML =
+    `<div class="placeholder"><h2>${escapeHtml(title)}</h2><p>${escapeHtml(message)}</p></div>`;
+}
+
 // ---- Load Home data ----
 async function loadHome() {
-  try {
-    const res = await fetch("/api/home");
-    const data = await res.json();
-    if (!res.ok) throw new Error(data.error || "Failed to load");
+  if (!artistLinkId) {
+    showLinkError(
+      "Missing your show link",
+      "This page needs your personal link (it looks like ?u=your-id at the end of the URL). Check the email you were sent."
+    );
+    return;
+  }
 
+  try {
+    const res = await fetch(`/api/home?u=${encodeURIComponent(artistLinkId)}`);
+    const data = await res.json();
+    if (!res.ok) {
+      if (res.status === 404) {
+        showLinkError("Link not recognized", "We couldn't find an artist for this link. Double check the URL or ask for a new one.");
+        return;
+      }
+      throw new Error(data.error || "Failed to load");
+    }
+
+    document.getElementById("sidebarUser").textContent = data.artistName;
     document.getElementById("greeting").textContent = `Welcome back, ${data.artistName}!`;
 
     // Needs Attention

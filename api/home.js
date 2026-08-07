@@ -3,13 +3,13 @@
 // Applications & Bookings (deadlines, status) + Events (venue/location)
 // + Event Results & Logistics (setup info, expenses).
 //
-// NOTE: This base doesn't yet have per-artist scoping (no Artists table /
-// link field). Until that's added, this returns ALL records — fine while
-// it's just Kelley, but needs the Artist link field before other beta
-// testers use it. See README.
+// Scoped per artist via the "Artist" link field on Applications & Bookings.
+// Callers must pass ?u=<Link ID>, which is looked up against the Artists
+// table to find the artist's record, then used to filter everything else.
 
 const AIRTABLE_BASE = process.env.AIRTABLE_BASE_ID;
 const AIRTABLE_TOKEN = process.env.AIRTABLE_TOKEN;
+const ARTISTS_TABLE = "Artists";
 const EVENTS_TABLE = "Events";
 const APPLICATIONS_TABLE = "Applications & Bookings";
 const RESULTS_TABLE = "Event Results & Logistics";
@@ -20,6 +20,14 @@ async function airtableRequest(path) {
   });
   if (!res.ok) throw new Error(`Airtable ${res.status}: ${await res.text()}`);
   return res.json();
+}
+
+async function findArtistByLinkId(linkId) {
+  const formula = `{Link ID}='${linkId.replace(/'/g, "\\'")}'`;
+  const data = await airtableRequest(
+    `${encodeURIComponent(ARTISTS_TABLE)}?filterByFormula=${encodeURIComponent(formula)}`
+  );
+  return data.records[0] || null;
 }
 
 async function fetchAll(table) {
@@ -41,11 +49,31 @@ module.exports = async (req, res) => {
       return;
     }
 
-    const [applications, events, results] = await Promise.all([
+    const artistLinkId = req.query.u;
+    if (!artistLinkId) {
+      res.status(400).json({ error: "Missing your personal show link (?u=...)." });
+      return;
+    }
+
+    const artist = await findArtistByLinkId(artistLinkId);
+    if (!artist) {
+      res.status(404).json({ error: "We couldn't find an artist for this link." });
+      return;
+    }
+
+    const [applicationsAll, events, resultsAll] = await Promise.all([
       fetchAll(APPLICATIONS_TABLE),
       fetchAll(EVENTS_TABLE),
       fetchAll(RESULTS_TABLE),
     ]);
+
+    const applications = applicationsAll.filter((a) =>
+      (a.fields["Artist"] || []).some((link) => link.id === artist.id)
+    );
+    const applicationIds = new Set(applications.map((a) => a.id));
+    const results = resultsAll.filter((r) =>
+      (r.fields["Related Application / Booking"] || []).some((link) => applicationIds.has(link.id))
+    );
 
     const eventsById = Object.fromEntries(events.map((e) => [e.id, e.fields]));
 
@@ -124,7 +152,7 @@ module.exports = async (req, res) => {
       : null;
 
     res.status(200).json({
-      artistName: "Kelley",
+      artistName: artist.fields["Name"] || "there",
       needsAttention: needsAttention.slice(0, 5),
       ytd: { sales, expenses, netIncome },
       nextEvent,
