@@ -118,6 +118,21 @@ button:focus-visible, a:focus-visible { outline: 3px solid rgba(86, 60, 92, .28)
 .quick-btn--primary { color: #fff; background: var(--plum); }
 .quick-btn--primary:hover { background: var(--plum-deep); }
 
+@media (max-width: 619px) {
+  .quick-actions {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 8px;
+  }
+  .quick-btn {
+    min-width: 0;
+    padding: 0 7px;
+    gap: 4px;
+    font-size: clamp(.72rem, 3.15vw, .84rem);
+    white-space: nowrap;
+  }
+}
+
 .section-heading {
   margin: 0 0 12px;
   display: flex;
