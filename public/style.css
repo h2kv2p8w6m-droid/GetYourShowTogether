@@ -180,7 +180,7 @@ button:focus-visible, a:focus-visible { outline: 3px solid rgba(86, 60, 92, .28)
 }
 .section-heading--event { color: var(--show-blue-deep); }
 .section-heading--event .icon { background: var(--show-blue); }
-.section-heading--snapshot .icon { background: var(--mineral); color: var(--ink-deep); }
+.section-heading--snapshot .icon { background: var(--mineral); color: #fff; }
 .section-heading--snapshot { margin-top: 34px; }
 
 .attention-card,
