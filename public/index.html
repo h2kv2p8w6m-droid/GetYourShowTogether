@@ -28,23 +28,39 @@
       <div class="sidebar-user" id="sidebarUser"></div>
     </nav>
 
+    <header class="mobile-topbar">
+      <button class="menu-button" id="menuBtn" aria-label="Open navigation" aria-expanded="false">
+        <i class="ti ti-menu-2" aria-hidden="true"></i>
+      </button>
+      <img src="logo.png" alt="Get Your Show Together" class="mobile-logo" />
+      <span class="mobile-topbar-spacer" aria-hidden="true"></span>
+    </header>
+
     <main id="main">
 
       <!-- HOME VIEW -->
       <section class="view is-active" data-view="home">
-        <header class="mobile-topbar">
-          <img src="logo.png" alt="Get Your Show Together" class="mobile-logo" />
-        </header>
-
         <h1 class="greeting" id="greeting">Welcome back.</h1>
-        <p class="quote" id="quote"></p>
+        <p class="greeting-support">Here’s what needs your attention.</p>
 
         <div class="quick-actions">
-          <button class="quick-btn quick-btn--primary" data-action="add-event">+ ADD EVENT</button>
-          <button class="quick-btn quick-btn--secondary" data-action="add-expense">+ ENTER EXP</button>
-          <button class="quick-btn quick-btn--secondary" data-action="add-sale">+ ENTER SALES</button>
+          <button class="quick-btn quick-btn--primary" data-action="add-event"><i class="ti ti-plus" aria-hidden="true"></i>Add Show</button>
+          <button class="quick-btn quick-btn--secondary" data-action="add-expense"><i class="ti ti-plus" aria-hidden="true"></i>Add Expense</button>
+          <button class="quick-btn quick-btn--secondary" data-action="add-sale"><i class="ti ti-plus" aria-hidden="true"></i>Add Sale</button>
         </div>
 
+        <div class="section-heading section-heading--attention"><span>NEEDS YOUR ATTENTION</span><i class="ti ti-bell icon" aria-hidden="true"></i></div>
+        <div class="attention-card" id="attentionCard"></div>
+
+        <div class="section-heading section-heading--event"><span>NEXT SCHEDULED EVENT</span><i class="ti ti-calendar-event icon" aria-hidden="true"></i></div>
+        <div class="next-event-card" id="nextEventCard">
+          <div class="empty-state">
+            <div class="empty-state-icon"><i class="ti ti-calendar-plus" aria-hidden="true"></i></div>
+            <div><strong>Your calendar is clear.</strong><span id="nextEventEmpty">Add a confirmed show and it will appear here.</span></div>
+          </div>
+        </div>
+
+        <div class="section-heading section-heading--snapshot"><span>YOUR YEAR AT A GLANCE</span><i class="ti ti-chart-dots-2 icon" aria-hidden="true"></i></div>
         <div class="ytd-grid">
           <div class="ytd-tile">
             <div class="ytd-tile-head">
@@ -69,14 +85,6 @@
           </div>
         </div>
         <div class="ytd-footnote">Sales tax excluded</div>
-
-        <div class="section-heading"><i class="ti ti-bell icon" aria-hidden="true"></i>Needs your attention</div>
-        <div class="attention-card" id="attentionCard"></div>
-
-        <div class="section-heading"><i class="ti ti-calendar-event icon" aria-hidden="true"></i>Next scheduled event</div>
-        <div class="next-event-card" id="nextEventCard">
-          <div class="next-event-empty" id="nextEventEmpty">No upcoming confirmed shows yet.</div>
-        </div>
       </section>
 
       <!-- PLACEHOLDER VIEWS -->
@@ -89,24 +97,22 @@
 
     </main>
 
-    <!-- MOBILE BOTTOM NAV -->
-    <nav class="bottom-nav">
-      <button class="bottom-item is-active" data-view="home"><i class="ti ti-layout-dashboard icon" aria-hidden="true"></i>Dashboard</button>
-      <button class="bottom-item" data-view="shows"><i class="ti ti-calendar-event icon" aria-hidden="true"></i>Shows</button>
-      <button class="bottom-item" data-view="tasks"><i class="ti ti-checkbox icon" aria-hidden="true"></i>Tasks</button>
-      <button class="bottom-item" data-view="expenses"><i class="ti ti-currency-dollar icon" aria-hidden="true"></i>Expenses</button>
-      <button class="bottom-item" id="moreBtn"><i class="ti ti-dots icon" aria-hidden="true"></i>More</button>
-    </nav>
-
-    <!-- MORE SHEET (mobile) -->
-    <div class="sheet-backdrop" id="moreSheetBackdrop">
-      <div class="sheet">
-        <div class="sheet-handle"></div>
-        <button class="more-item" data-view="contacts"><i class="ti ti-users" aria-hidden="true"></i>Contacts</button>
-        <button class="more-item" data-view="files"><i class="ti ti-folder" aria-hidden="true"></i>Files</button>
-        <button class="more-item" data-view="reviews"><i class="ti ti-star" aria-hidden="true"></i>Reviews</button>
-        <button class="btn btn--ghost" id="closeMoreBtn">Close</button>
-      </div>
+    <!-- MOBILE MENU -->
+    <div class="mobile-menu-backdrop" id="mobileMenuBackdrop" hidden>
+      <nav class="mobile-menu" aria-label="Mobile navigation">
+        <div class="mobile-menu-head">
+          <img src="logo.png" alt="Get Your Show Together" class="mobile-menu-logo" />
+          <button class="menu-close" id="menuClose" aria-label="Close navigation"><i class="ti ti-x" aria-hidden="true"></i></button>
+        </div>
+        <button class="mobile-nav-item is-active" data-view="home"><i class="ti ti-layout-dashboard" aria-hidden="true"></i>Dashboard</button>
+        <button class="mobile-nav-item" data-view="shows"><i class="ti ti-calendar-event" aria-hidden="true"></i>Shows</button>
+        <button class="mobile-nav-item" data-view="tasks"><i class="ti ti-checkbox" aria-hidden="true"></i>Tasks</button>
+        <button class="mobile-nav-item" data-view="expenses"><i class="ti ti-currency-dollar" aria-hidden="true"></i>Expenses</button>
+        <button class="mobile-nav-item" data-view="contacts"><i class="ti ti-users" aria-hidden="true"></i>Contacts</button>
+        <button class="mobile-nav-item" data-view="files"><i class="ti ti-folder" aria-hidden="true"></i>Files</button>
+        <button class="mobile-nav-item" data-view="reviews"><i class="ti ti-star" aria-hidden="true"></i>Reviews</button>
+        <div class="mobile-menu-user" id="mobileMenuUser">Kelley</div>
+      </nav>
     </div>
 
     <!-- SIDE PEEK -->

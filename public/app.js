@@ -3,7 +3,7 @@ function showView(name) {
   document.querySelectorAll(".view").forEach((v) => {
     v.classList.toggle("is-active", v.dataset.view === name);
   });
-  document.querySelectorAll(".nav-item, .bottom-item").forEach((btn) => {
+  document.querySelectorAll(".nav-item, .mobile-nav-item").forEach((btn) => {
     if (btn.dataset.view) btn.classList.toggle("is-active", btn.dataset.view === name);
   });
 }
@@ -11,23 +11,34 @@ function showView(name) {
 document.querySelectorAll("[data-view]").forEach((el) => {
   el.addEventListener("click", () => {
     showView(el.dataset.view);
-    closeMoreSheet();
+    closeMobileMenu();
   });
 });
 
-const moreBtn = document.getElementById("moreBtn");
-const moreSheetBackdrop = document.getElementById("moreSheetBackdrop");
-const closeMoreBtn = document.getElementById("closeMoreBtn");
+const menuBtn = document.getElementById("menuBtn");
+const menuClose = document.getElementById("menuClose");
+const mobileMenuBackdrop = document.getElementById("mobileMenuBackdrop");
 
-function openMoreSheet() { moreSheetBackdrop.hidden = false; }
-function closeMoreSheet() { moreSheetBackdrop.hidden = true; }
+function openMobileMenu() {
+  mobileMenuBackdrop.hidden = false;
+  menuBtn.setAttribute("aria-expanded", "true");
+  document.body.classList.add("menu-open");
+  menuClose.focus();
+}
+function closeMobileMenu() {
+  mobileMenuBackdrop.hidden = true;
+  menuBtn.setAttribute("aria-expanded", "false");
+  document.body.classList.remove("menu-open");
+}
 
-moreBtn.addEventListener("click", openMoreSheet);
-closeMoreBtn.addEventListener("click", closeMoreSheet);
-moreSheetBackdrop.addEventListener("click", (e) => {
-  if (e.target === moreSheetBackdrop) closeMoreSheet();
+menuBtn.addEventListener("click", openMobileMenu);
+menuClose.addEventListener("click", closeMobileMenu);
+mobileMenuBackdrop.addEventListener("click", (e) => {
+  if (e.target === mobileMenuBackdrop) closeMobileMenu();
 });
-moreSheetBackdrop.hidden = true;
+document.addEventListener("keydown", (e) => {
+  if (e.key === "Escape" && !mobileMenuBackdrop.hidden) closeMobileMenu();
+});
 
 // ---- Quick actions (stubbed for now) ----
 document.querySelectorAll(".quick-btn").forEach((btn) => {
@@ -35,19 +46,6 @@ document.querySelectorAll(".quick-btn").forEach((btn) => {
     alert("This action is coming in the next build pass.");
   });
 });
-
-// ---- Rotating art/maker quote ----
-const QUOTES = [
-  { text: "Creativity takes courage.", author: "Henri Matisse" },
-  { text: "Every artist was first an amateur.", author: "Ralph Waldo Emerson" },
-  { text: "The chief enemy of creativity is good sense.", author: "Pablo Picasso" },
-  { text: "Art enables us to find ourselves and lose ourselves at the same time.", author: "Thomas Merton" },
-  { text: "Simplicity is the ultimate sophistication.", author: "Leonardo da Vinci" },
-];
-(function setQuote() {
-  const q = QUOTES[Math.floor(Math.random() * QUOTES.length)];
-  document.getElementById("quote").textContent = `"${q.text}" — ${q.author}`;
-})();
 
 function timeGreeting() {
   const h = new Date().getHours();
@@ -75,6 +73,7 @@ function fmtDateTime(iso) {
 // Artists open a link like: https://yourapp.vercel.app/?u=kelley-h27k9v
 // The "u" value is their private Link ID from the Artists table.
 const artistLinkId = new URLSearchParams(window.location.search).get("u");
+const isLocalPreview = ["localhost", "127.0.0.1"].includes(window.location.hostname);
 
 function showLinkError(title, message) {
   document.getElementById("main").innerHTML =
@@ -139,7 +138,7 @@ peekBackdrop.addEventListener("click", (e) => {
 
 // ---- Load Home data ----
 async function loadHome() {
-  if (!artistLinkId) {
+  if (!artistLinkId && !isLocalPreview) {
     showLinkError(
       "Missing your show link",
       "This page needs your personal link (it looks like ?u=your-id at the end of the URL). Check the email you were sent."
@@ -148,7 +147,7 @@ async function loadHome() {
   }
 
   try {
-    const res = await fetch(`/api/home?u=${encodeURIComponent(artistLinkId)}`);
+    const res = await fetch(`/api/home?u=${encodeURIComponent(artistLinkId || "preview")}`);
     const data = await res.json();
     if (!res.ok) {
       if (res.status === 404) {
@@ -159,6 +158,7 @@ async function loadHome() {
     }
 
     document.getElementById("sidebarUser").textContent = data.artistName;
+    document.getElementById("mobileMenuUser").textContent = data.artistName;
     document.getElementById("greeting").textContent = `${timeGreeting()}, ${data.artistName}.`;
 
     // Needs Attention — grouped into Overdue / Due today only
@@ -221,7 +221,19 @@ async function loadHome() {
     }
   } catch (err) {
     console.error(err);
-    document.getElementById("greeting").textContent = "Get Your Show Together";
+    if (isLocalPreview) {
+      document.getElementById("sidebarUser").textContent = "Kelley";
+      document.getElementById("mobileMenuUser").textContent = "Kelley";
+      document.getElementById("greeting").textContent = `${timeGreeting()}, Kelley.`;
+      document.getElementById("attentionCard").innerHTML = `<div class="attention-empty">Nothing overdue or due today — you’re in good shape.</div>`;
+      document.getElementById("ytdSales").textContent = "$340";
+      document.getElementById("ytdExpenses").textContent = "$989";
+      document.getElementById("ytdNet").textContent = "−$649";
+      document.getElementById("ytdNet").className = "ytd-value ytd-value--net-negative";
+      document.getElementById("ytdNetIcon").className = "ytd-tile-icon ytd-tile-icon--red";
+    } else {
+      document.getElementById("greeting").textContent = "Get Your Show Together";
+    }
   }
 }
 
