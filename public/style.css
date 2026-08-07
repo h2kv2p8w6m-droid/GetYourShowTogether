@@ -126,8 +126,22 @@ button:focus-visible, a:focus-visible { outline: 3px solid rgba(86, 60, 92, .28)
   transition: transform .16s ease, box-shadow .16s ease, background .16s ease;
 }
 .quick-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 18px rgba(86,60,92,.13); }
-.quick-btn--primary { color: #fff; background: var(--plum); }
-.quick-btn--primary:hover { background: var(--plum-deep); }
+.quick-btn[data-action="add-event"] {
+  color: #fff;
+  border-color: var(--show-blue);
+  background: var(--show-blue);
+}
+.quick-btn[data-action="add-event"]:hover { background: var(--show-blue-deep); }
+.quick-btn[data-action="add-expense"] {
+  color: var(--plum);
+  border-color: var(--plum);
+}
+.quick-btn[data-action="add-sale"] {
+  color: var(--mineral-deep);
+  border-color: var(--mineral-deep);
+}
+.quick-btn[data-action="add-expense"]:hover { background: var(--plum-tint); }
+.quick-btn[data-action="add-sale"]:hover { background: var(--mineral-tint); }
 
 @media (max-width: 619px) {
   .quick-actions {
